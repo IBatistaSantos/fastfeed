@@ -12,3 +12,8 @@ Route.put('users','UserController.update').middleware('auth')
 Route.delete('users','UserController.destroy').middleware('auth')  
 
 Route.resource('recipients', 'RecipientController').middleware('auth').apiOnly()
+Route.resource('deliveryman', 'DeliverymanController').middleware('auth').apiOnly()
+
+
+
+Route.post('files/avatar/:id', 'FileController.store').middleware('auth')
