@@ -5,9 +5,6 @@ const Model = use('Model')
 
 class Deliveryman extends Model {
     
-    avatar(){
-        this.belongsTo('App/Models/File')
-    }  
 }
 
 module.exports = Deliveryman

@@ -4,7 +4,11 @@ const Deliveryman = use('App/Models/Deliveryman')
 const Helpers = use('Helpers')
 
 class FileController {
-    async store ({params, request , response}) {
+    async show ({params, response}) {
+        const file = await File.findOrFail(params.id) 
+        return response.download(Helpers.tmpPath(`uploads/${file.file}`))
+    }
+    async store ({params, request}) {
         try {
             switch (request.url()) {
                 case `/files/avatar/${params.id}`:

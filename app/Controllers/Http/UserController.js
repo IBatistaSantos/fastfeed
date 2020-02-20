@@ -2,7 +2,7 @@
 const User = use('App/Models/User') 
 class UserController {
     async index() {
-        const user = await User.all()
+        const user = await User.query().fetch()
         return user
     }
     

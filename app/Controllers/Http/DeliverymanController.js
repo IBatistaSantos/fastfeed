@@ -2,7 +2,7 @@
 const Deliveryman = use('App/Models/Deliveryman')
 class DeliverymanController {
   async index () {
-    const deliveryman = await Deliveryman.query().with('avatar').fetch()
+    const deliveryman = await Deliveryman.query().fetch()
     return deliveryman
   }
 
@@ -23,7 +23,6 @@ class DeliverymanController {
 
     deliveryman.merge(data)
     await deliveryman.save()
-
     return deliveryman
   }
 async destroy ({ params }) {

@@ -1,91 +1,40 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Delivery = use('App/Models/Delivery')
+const Recipient = use('App/Models/Recipient')
+const Deliveryman = use('App/Models/Deliveryman')
 
-/**
- * Resourceful controller for interacting with deliveries
- */
 class DeliveryController {
-  /**
-   * Show a list of all deliveries.
-   * GET deliveries
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async index ({ request, response, view }) {
+    const delivery = await Delivery.query().with('recipients').with('deliveryman').fetch()
+    return delivery
   }
-
-  /**
-   * Render a form to be used for creating a new delivery.
-   * GET deliveries/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new delivery.
-   * POST deliveries
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    const {product, recipient_id, deliveryman_id} = request.only(['product','recipient_id','deliveryman_id'])
+    
+    const recipient = await Recipient.findBy('id',recipient_id)
+    if(!recipient) {
+      return response.status(404).send({error: {message: 'Destinatário não foi encontrado'}})
+    }
+ 
+    const deliveryman = await Deliveryman.findBy('id',deliveryman_id)
+    if(!deliveryman) {
+      return response.status(404).send({error: {message: 'Não encontramos esse entregador'}})
+    }
+
+    const delivery = await Delivery.create({
+      product,
+      recipient_id,
+      deliveryman_id
+    })
+    return delivery
   }
 
-  /**
-   * Display a single delivery.
-   * GET deliveries/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
   }
 
-  /**
-   * Render a form to update an existing delivery.
-   * GET deliveries/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update delivery details.
-   * PUT or PATCH deliveries/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
   }
-
-  /**
-   * Delete a delivery with id.
-   * DELETE deliveries/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }
