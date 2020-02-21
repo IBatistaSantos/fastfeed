@@ -1,11 +1,11 @@
 'use strict'
-const User = use('App/Models/User') 
+const User = use('App/Models/User')
 class UserController {
     async index() {
         const user = await User.query().fetch()
         return user
     }
-    
+
     async store ({request}) {
         const data = request.only(['name','email','password'])
         const user = await User.create(data)
@@ -21,8 +21,9 @@ class UserController {
         const data = request.only(['name','email','password'])
         const user =  await User.findOrFail(auth.user.id)
 
-        user.merge()
-        await user.save(data)
+
+        user.merge(data)
+        await user.save()
 
         return user
     }

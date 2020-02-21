@@ -9,7 +9,7 @@ class DeliverymanSchema extends Schema {
       table.increments()
       table.string('name').notNullable()
       table.string('email').notNullable()
-      table.integer('avatar_id').unsigned().references('id').inTable('files')
+      table.integer('file_id').unsigned().references('id').inTable('files')
       table.timestamps()
     })
   }

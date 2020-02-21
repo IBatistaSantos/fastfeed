@@ -5,7 +5,7 @@ const Helpers = use('Helpers')
 
 class FileController {
     async show ({params, response}) {
-        const file = await File.findOrFail(params.id) 
+        const file = await File.findOrFail(params.id)
         return response.download(Helpers.tmpPath(`uploads/${file.file}`))
     }
     async store ({params, request}) {
@@ -29,19 +29,18 @@ class FileController {
                         type: upload.type,
                         subtype: upload.subtype
                     })
-
-                    const deliveryman = await Deliveryman.findOrFail(params.id)
-                    deliveryman.avatar_id = file.id
+                   const deliveryman = await Deliveryman.findOrFail(params.id)
+                    deliveryman.merge({file_id:file.id})
                     await deliveryman.save()
                     return file
-                   
+
                     case `/files/signature/${params.id}`:
                         break
                 default:
                     break;
             }
         } catch (error) {
-            
+
         }
     }
 }

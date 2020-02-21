@@ -20,10 +20,10 @@ class DeliveriesSchema extends Schema {
       .inTable('deliverymen')
       .notNullable()
 
-      table.integer('signature_id').unsigned().references('id').inTable('files')
-      table.timestamp('canceled_at')  
-      table.timestamp('start_at')  
-      table.timestamp('end_at')  
+      table.integer('file_id').unsigned().references('id').inTable('files')
+      table.timestamp('canceled_at')
+      table.timestamp('start_at')
+      table.timestamp('end_at')
       table.timestamps()
     })
   }
