@@ -7,7 +7,7 @@ class DeliverymanController {
   }
 
   async store ({ request }) {
-    const data = request.only(['name', 'at'])
+    const data = request.only(['name', 'email'])
     const deliveryman = await Deliveryman.create(data)
     return deliveryman
   }
