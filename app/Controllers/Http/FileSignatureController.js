@@ -1,10 +1,10 @@
 'use strict'
-const File = use('App/Models/File')
-const Deliveryman = use('App/Models/Deliveryman')
 
 const Helpers = use('Helpers')
+const File = use('App/Models/File')
+const Delivery = use('App/Models/Deliveries')
 
-class FileController {
+class FileSignatureController {
   async show ({ params, response }) {
     const file = await File.findOrFail(params.id)
     return response.download(Helpers.tmpPath(`uploads/${file.file}`))
@@ -29,9 +29,9 @@ class FileController {
         type: upload.type,
         subtype: upload.subtype
       })
-      const deliveryman = await Deliveryman.findOrFail(params.id)
-      deliveryman.merge({ file_id: file.id })
-      await deliveryman.save()
+      const delivery = await Delivery.findOrFail(params.id)
+      delivery.merge({ file_id: file.id })
+      await delivery.save()
       return file
     } catch (error) {
 
@@ -39,4 +39,4 @@ class FileController {
   }
 }
 
-module.exports = FileController
+module.exports = FileSignatureController

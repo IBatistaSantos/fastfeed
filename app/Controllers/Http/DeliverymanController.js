@@ -12,7 +12,7 @@ class DeliverymanController {
     return deliveryman
   }
 
-  async show ({ params}) {
+  async show ({ params }) {
     const deliveryman = await Deliveryman.findOrFail(params.id)
     return deliveryman
   }
@@ -25,6 +25,7 @@ class DeliverymanController {
     await deliveryman.save()
     return deliveryman
   }
+
   async destroy ({ params }) {
     const deliveryman = await Deliveryman.findOrFail(params.id)
     await deliveryman.delete()
